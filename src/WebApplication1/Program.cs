@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapPost("WeatherForecast/0", (Model model) => model.Data.Length);
+app.MapPost("WeatherForecast/0", (Model model) => model.Data.Length)
+   .AddEndpointFilter<ModelValidator>();
 
 app.Run();

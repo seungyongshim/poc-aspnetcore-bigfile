@@ -1,4 +1,5 @@
 using System.Buffers.Text;
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 
 public record Model
@@ -11,6 +12,16 @@ public record Model2
     public required string Data { get; init; }
 }
 
+
+public class A( int a)
+{
+    public void WriteA()
+    {
+        a = 1;
+    }
+
+    public int PrintA() => a;
+}
 
 namespace WebApplication1.Controllers
 {
@@ -45,6 +56,12 @@ namespace WebApplication1.Controllers
         [HttpPost("3")]
         public int Post3(Model2 model)
         {
+            var a= new A(10);
+
+            a.WriteA();
+
+            Console.WriteLine(a.PrintA());
+
             var length = model.Data.Length;
 
             var fileSizeInByte = (length >> 2) * 3;

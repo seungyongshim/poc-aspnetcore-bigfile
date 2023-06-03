@@ -32,4 +32,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapPost("WeatherForecast/0", (Model model) => model.Data.Length);
+
 app.Run();

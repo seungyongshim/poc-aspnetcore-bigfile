@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IValidator<Model>, ModelValidator>();
 
 var app = builder.Build();
 
@@ -34,6 +36,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapPost("WeatherForecast/0", (Model model) => model.Data.Length)
-   .AddEndpointFilter<ModelValidator>();
+   .AddEndpointFilter<ValidationFilter<Model>>();
 
 app.Run();
